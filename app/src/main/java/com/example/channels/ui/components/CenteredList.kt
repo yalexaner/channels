@@ -6,6 +6,7 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import kotlin.math.ceil
 import kotlin.math.max
+import kotlin.math.min
 
 @Composable
 fun CenteredList(
@@ -58,5 +59,5 @@ private fun List<Placeable>.takeBefore(index: Int, count: Int): List<Placeable> 
 }
 
 private fun List<Placeable>.takeAfter(index: Int, count: Int): List<Placeable> {
-    return subList(index + 1, size) + take(max(count - (size - 1 - index), 0))
+    return subList(index + 1, min(index + 1 + count, size)) + take(max(count - (size - 1 - index), 0))
 }
