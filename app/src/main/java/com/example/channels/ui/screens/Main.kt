@@ -1,28 +1,22 @@
 package com.example.channels.ui.screens
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.channels.R
-import com.example.channels.data.entities.Channel
+import com.example.channels.data.MainViewModel
 import com.example.channels.ui.components.ChannelsList
 
 @Composable
-fun MainScreen() {
-    val channels = listOf(
-        Channel(imageId = R.drawable.channel1, name = "Матч"),
-        Channel(imageId = R.drawable.channel1, name = "Матч"),
-        Channel(imageId = R.drawable.channel1, name = "Матч"),
-        Channel(imageId = R.drawable.channel0, name = "Первый"),
-        Channel(imageId = R.drawable.channel2, name = "Россия 1"),
-        Channel(imageId = R.drawable.channel2, name = "Россия 1"),
-        Channel(imageId = R.drawable.channel2, name = "Россия 1"),
-    )
-    var primaryChannelId by remember { mutableStateOf(3) }
+fun MainScreen(viewModel: MainViewModel) {
+    val channels by viewModel.channels.observeAsState()
+    val primaryChannelId by viewModel.primaryChannelIdx.observeAsState(0)
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         ChannelsList(
