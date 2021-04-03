@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.channels.data.MainViewModel
 import com.example.channels.ui.components.ChannelsList
+import com.example.channels.ui.components.ControlButtons
 
 @Composable
 fun MainScreen(viewModel: MainViewModel) {
@@ -19,31 +20,16 @@ fun MainScreen(viewModel: MainViewModel) {
     val primaryChannelId by viewModel.primaryChannelIdx.observeAsState(0)
 
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        ChannelsList(
-            channels = channels,
-            primaryChannelId = primaryChannelId,
-            modifier = Modifier.padding(top = 8.dp)
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Row {
-            TextButton(
-                onClick = {
-                    primaryChannelId =
-                        (primaryChannelId - 1).takeIf { it >= 0 } ?: channels.size - 1
-                }
-            ) {
-                Text(text = "PREVIOUS")
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            TextButton(
-                onClick = {
-                    primaryChannelId = (primaryChannelId + 1).takeIf { it < channels.size } ?: 0
-                }
-            ) {
-                Text(text = "NEXT")
-            }
+        if (channels != null) {
+            ChannelsList(
+                channels = channels!!,
+                primaryChannelId = primaryChannelId,
+                modifier = Modifier.padding(top = 8.dp)
+            )
         }
+
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = primaryChannelId.toString())
+
+        ControlButtons(onGoToPrevious = viewModel::goToPrevious, onGoToNext = viewModel::goToNext)
     }
 }

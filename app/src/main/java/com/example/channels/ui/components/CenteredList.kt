@@ -35,8 +35,7 @@ fun CenteredList(
         var xPosition =
             (constraints.maxWidth - elementWidth) / 2 - (elementWidth * sideElementsOnScreen)
 
-        layout(constraints.maxWidth, placeables.maxOf { it.height }) {
-
+        layout(constraints.maxWidth, placeables[centeredElementId].height) {
             elementsToPlace.forEach { placeable ->
                 placeable.place(x = xPosition, y = 0)
                 xPosition += elementWidth
@@ -59,5 +58,6 @@ private fun List<Placeable>.takeBefore(index: Int, count: Int): List<Placeable> 
 }
 
 private fun List<Placeable>.takeAfter(index: Int, count: Int): List<Placeable> {
-    return subList(index + 1, min(index + 1 + count, size)) + take(max(count - (size - 1 - index), 0))
+    val firstElements = max(count - (size - 1 - index), 0)
+    return subList(index + 1, min(index + 1 + count, size)) + take(firstElements)
 }
