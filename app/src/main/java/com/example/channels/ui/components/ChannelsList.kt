@@ -20,8 +20,12 @@ fun ChannelsList(
     primaryChannelId: Int
 ) {
     CenteredList(modifier = modifier, centeredElementId = primaryChannelId) {
-        channels.forEach { channel ->
-            Channel(channel = channel, modifier = Modifier.padding(horizontal = 4.dp))
+        channels.forEachIndexed { index, channel ->
+            Channel(
+                channel = channel,
+                primary = index == primaryChannelId,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
         }
     }
 }
